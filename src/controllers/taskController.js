@@ -1,5 +1,5 @@
 const Task = require('../models/Task');
-//const { sendNotification } = require('../utils/notification');
+const { sendNotification } = require('../utils/notification');
 
 const createTask = async (req, res) => {
   try {
@@ -67,7 +67,7 @@ const  assignTask = async (req, res) => {
       task.assignedUser = assignedUserId;
       await task.save();
 
-      //sendNotification(assignedUserId, 'Task Assigned', `You have been assigned a new task: ${task.title}`);
+      sendNotification(assignedUserId, 'Task Assigned', `You have been assigned a new task: ${task.title}`);
       res.json(task);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -87,7 +87,7 @@ const  assignTask = async (req, res) => {
   
       if (!task) return res.status(404).json({ message: 'Task not found' });
   
-      //sendNotification(task.assignedUser, 'Task Updated', `Task "${task.title}" has been updated.`);
+      sendNotification(task.assignedUser, 'Task Updated', `Task "${task.title}" has been updated.`);
       res.json(task);
     } catch (error) {
       res.status(500).json({ message: error.message });
